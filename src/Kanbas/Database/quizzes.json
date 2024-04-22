@@ -1,0 +1,71 @@
+[
+    {
+        "_id": "Q101",
+        "name": "Introduction to Rocket Propulsion",
+        "description": "Basic principles of rocket propulsion and rocket engines.",
+        "course": "RS101",
+        "quizType": "Graded Quiz",
+        "shuffleAnswers": true,
+        "timeLimit": false,
+        "minutes": 0,
+        "points": 25,
+        "allowMultipleAttemps": false,
+        "avaliability": "2024-04-19",
+        "due": "2024-04-22",
+        "published": false,
+        "questions": [
+            {
+                "_id": "Q101Q1",
+                "question": "What is the principle behind rocket propulsion?",
+                "options": [
+                    "Newton's First Law of Motion",
+                    "Bernoulli's Principle",
+                    "Einstein's Theory of Relativity",
+                    "Archimedes' Principle"
+                ],
+                "correctAnswer": "Newton's Third Law of Motion"
+            },
+            {
+                "_id": "Q101Q2",
+                "question": "Which type of rocket engine is commonly used in space exploration?",
+                "options": [
+                    "Solid Rocket Engine",
+                    "Liquid Rocket Engine",
+                    "Hybrid Rocket Engine",
+                    "Ion Thruster"
+                ],
+                "correctAnswer": "Liquid Rocket Engine"
+            },
+            {
+                "_id": "Q101Q3",
+                "question": "What is the specific impulse of a rocket engine?",
+                "options": [
+                    "The time it takes for the rocket to reach its destination",
+                    "The force exerted by the rocket engine",
+                    "The efficiency of the rocket engine",
+                    "The maximum speed the rocket can achieve"
+                ],
+                "correctAnswer": "The efficiency of the rocket engine"
+            }
+        ]
+    },
+    {
+        "_id": "Q102",
+        "name": "Introduction to Rockets",
+        "description": "Basic principles of rockets.",
+        "course": "RS101",
+        "quizType": "Graded Quiz",
+        "shuffleAnswers": false,
+        "timeLimit": false,
+        "minutes": 0,
+        "points": 50,
+        "allowMultipleAttemps": false,
+        "avaliability": "2024-04-20",
+        "due": "2024-04-21",
+        "published": false
+    }
+
+
+]
+
+

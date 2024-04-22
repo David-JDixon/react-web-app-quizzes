@@ -1,0 +1,124 @@
+.question-form {
+    font-family: 'Arial', sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .question-form input[type="text"], .question-form textarea, .question-form select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .question-form textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .answers-section {
+    margin-bottom: 20px;
+  }
+  
+  .answer-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .answer-input input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .question-form button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .question-form button:hover {
+    opacity: 0.8;
+  }
+
+
+  .answer-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .answer-input .delete-answer-button {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    color: #696969;
+    cursor: pointer;
+    font-size: 16px; 
+  }
+  
+  .answer-input .delete-answer-button:hover {
+    opacity: 0.7;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .cancel-button {
+    background-color: #f0f0f0; 
+    color: #333; 
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .update-question-button {
+    background-color: #d32f2f; 
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cancel-button:hover {
+    background-color: #e0e0e0; 
+  }
+  
+  .update-question-button:hover {
+    background-color: #c62828; 
+  }
+
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .question-title-input {
+    flex-grow: 1; 
+    margin-right: 10px; 
+  }
+  
+  .points-input-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .points-input {
+    width: auto; 
+    margin-left: 5px; 
+  }
+  

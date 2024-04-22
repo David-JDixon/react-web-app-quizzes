@@ -1,0 +1,17 @@
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 10px; /* Add margin-right to push the buttons to the right */
+  }
+  
+  .context-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    min-width: 120px;
+    z-index: 1;
+    right: 0; /* Align the context menu to the right side */
+  }
+  
