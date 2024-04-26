@@ -22,12 +22,13 @@ function App() {
     <Provider store={store}>
     <Router>
       <Routes>
-        <Route path="/questionForm" element={<QuestionForm/>}/>
+        <Route path='/Kanbas' element={<Kanbas/>}/>
+        <Route path="/questionForm/:quizId" element={<QuestionForm />} />
         <Route path="/quiz-details/:quizId" element={<QuizDetails />} /> 
         <Route path="/quiz-list" element={<QList />} />
         <Route path="/quiz-preview/:quizId" element={<QuizPreview/>} />
         <Route path="/edit-quiz/:quizId" element={<QuizDetailEditor />} />
-        <Route path="/" element={<Navigate to="/quiz-list" replace />} />
+        <Route path="/" element={<Navigate to="/Kanbas" replace />} />
       </Routes>
     </Router>
     </Provider>
