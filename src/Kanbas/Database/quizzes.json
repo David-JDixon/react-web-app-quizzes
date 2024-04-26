@@ -60,7 +60,7 @@
         "minutes": 0,
         "points": 50,
         "allowMultipleAttemps": false,
-        "avaliability": "2024-04-20",
+        "availiableFrom": "2024-04-20",
         "due": "2024-04-21",
         "published": false
     }
