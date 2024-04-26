@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './questionStyle.css';
 import { FaTrashAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from "react-redux";
+import { KanbasState } from '../../../store';
+import { parse } from 'path';
+import { useNavigate, useParams } from 'react-router';
 
 type Answer = {
   text: string;
@@ -8,6 +12,8 @@ type Answer = {
 };
 
 function QuestionForm() {
+  const { quizId } = useParams();
+  const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
   const [questionTitle, setQuestionTitle] = useState('');
   const [questionText, setQuestionText] = useState('');
   const [questionType, setQuestionType] = useState('Multiple Choice');
@@ -16,6 +22,12 @@ function QuestionForm() {
     { text: 'False', isCorrect: false },
   ]);
   const [points, setPoints] = useState('');
+  const navigate = useNavigate();
+
+  const handleDetails = () => {
+    navigate(`/edit-quiz/${quizId}`)
+  };
+  
 
     const handleQuestionTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setQuestionType(event.target.value);
@@ -55,18 +67,35 @@ function QuestionForm() {
     };
 
     const addAnswer = () => {
-        setAnswers([...answers, { text: '', isCorrect: false }]);
+        setAnswers([...answers, { text: '', isCorrect: true }]);
     };
 
-    const handleSubmit = () => {
-        // Submit logic here
-        console.log({ questionTitle, questionText, answers });
+    const handleSubmit = (quiz : any) => {
+      const question = {
+        questionTitle,
+        questionText,
+        answers,
+      };
+    
+      // Create a new object with the updated questions array
+      const updatedQuiz = {
+        ...quiz,
+        questions: [...quiz.questions, question],
+      };
+    
+      // Dispatch an action to update the quiz in the Redux store
+      // dispatch(updateQuiz(updatedQuiz));
+      console.log(updatedQuiz);
+      navigate(`/edit-quiz/${updatedQuiz._id}`);
     };
 
 
   return (
-    
     <div className="question-form">
+      <div className="tabs">
+        <button className="tab"onClick={handleDetails}>Details</button>
+        <button className="tab">Questions</button>
+      </div>
       <div className="form-header">
       <input
         type="text"
@@ -158,7 +187,7 @@ function QuestionForm() {
         </div>
       )}
       <button className="cancel-button">Cancel</button>
-      <button onClick={handleSubmit} className="update-question-button">Update Question</button>
+      <button onClick={() => handleSubmit(quiz)} className="update-question-button">Update Question</button>
     </div>
   );
 };
