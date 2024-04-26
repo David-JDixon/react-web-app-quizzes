@@ -1,113 +1,76 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./index.css";
 import { BsRocket } from "react-icons/bs";
-import { quizzes } from "../../Database";
 import { useNavigate, useParams } from "react-router";
-
+import {
+  addQuiz,
+  deleteQuiz,
+  saveAndPublishQuiz,
+  setQuiz,
+  updateQuiz,
+  saveQuiz,
+  saveAndUnpublishQuiz,
+} from "../reducer";
+import { quizzes } from "../../Database";
+import { KanbasState } from "../../store";
 
 function QuizList() {
   const { courseId } = useParams();
-  const [quizzesList, setQuizList] = useState<any[]>(quizzes);
-  const [selectedQuiz, setSelectedQuiz] = useState(quizzesList[0]);
-  const [quiz, setQuiz] = useState({
-    name: "TestQuiz",
-    _id: "1",
-    description: "No Description",
-    quizType: "Graded Quiz",
-    assignmentGroup: "Quiz",
-    shuffleAnswers: true,
-    timeLimit: false,
-    minutes: 0,
-    allowMultipleAttemps: false,
-    availability: "2024-04-21",
-    due: "2024-04-21",
-    published: false,
-  });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const quizzesList = useSelector(
+    (state: KanbasState) => state.quizzesReducer.quizzes
+  );
+  const selectedQuiz = useSelector(
+    (state: KanbasState) => state.quizzesReducer.quiz
+  );
+
+  useEffect(() => {
+    dispatch(setQuiz(quizzes));
+  }, [dispatch]);
+
+  const [showContextMenu, setShowContextMenu] = useState<string | null>(null);
+  const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null);
+
+  const toggleContextMenu = (quizId: string) => {
+    console.log(quizId);
+    setShowContextMenu(quizId);
+    setSelectedQuizId(quizId);
+  };
 
   const editQuiz = (quiz: any) => {
-    // Implement edit functionality here, e.g., navigate to edit quiz screen
+    navigate(`/quiz-details/${quiz._id}`);
+  };
+
+  const addQuizHandler = (quiz: any) => {
     navigate(`/edit-quiz/${quiz._id}`);
   };
 
 
-  const addQuiz = (quiz: any) => {
-    const newQuiz = { ...quiz, _id: new Date().getTime().toString() };
-    const newQuizList = [newQuiz, ...quizzesList];
-    setQuizList(newQuizList);
-    navigate(`/quiz-details/${newQuiz._id}`);
+  const deleteQuizHandler = (quizId: string) => {
+    dispatch(deleteQuiz(quizId));
   };
 
-
-  const deleteQuiz = (quizId: string) => {
-    const newQuizList = quizzesList.filter((quiz) => quiz._id !== quizId);
-    setQuizList(newQuizList);
+  const publishQuizHandler = (quizId: string) => {
+    dispatch(saveAndPublishQuiz(quizId));
   };
 
-
-  const publishQuiz = (quizId: string) => {
-    const updatedQuizList = quizzesList.map((quiz) => {
-      if (quiz._id === quizId) {
-        return { ...quiz, published: !quiz.published };
-      }
-      return quiz;
-    });
-    setQuizList(updatedQuizList);
+  const unpublishQuizHandler = (quizId: string) => {
+    console.log("Unpublishing quiz with ID:", quizId);
+    dispatch(saveAndUnpublishQuiz(quizId));
   };
-
-
-  const toggleContextMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    quizId: string
-  ): void => {
-    event.preventDefault();
-    // Show context menu
-    const contextMenu = document.getElementById("context-menu");
-    if (contextMenu) {
-      contextMenu.style.display = "block";
-      contextMenu.style.left = `${event.clientX}px`;
-      contextMenu.style.top = `${event.clientY}px`;
-      const selectedQuiz = quizzesList.find((quiz) => quiz._id === quizId);
-      if (selectedQuiz) {
-        setSelectedQuiz(selectedQuiz);
-      }
-    }
-  };
-
+  
 
   const hideContextMenu = (): void => {
-    // Hide context menu
-    const contextMenu = document.getElementById("context-menu");
-    if (contextMenu) {
-      contextMenu.style.display = "none";
-    }
+    setShowContextMenu(null);
+    setSelectedQuizId(null);
   };
-
 
   const copyQuiz = (quizId: string) => {
-    // Implement copying functionality here, e.g., open a modal for selecting destination course
+    // Implement copying functionality here
   };
-
-
-  const sortQuizzes = (criteria: string) => {
-    let sortedQuizzes = [...quizzesList];
-    if (criteria === "name") {
-      sortedQuizzes.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (criteria === "due") {
-      sortedQuizzes.sort(
-        (a, b) => new Date(a.due).getTime() - new Date(b.due).getTime()
-      );
-    } else if (criteria === "availability") {
-      sortedQuizzes.sort(
-        (a, b) =>
-          new Date(a.availability).getTime() -
-          new Date(b.availability).getTime()
-      );
-    }
-    setQuizList(sortedQuizzes);
-  };
-
 
   return (
     <ul className="list-group">
@@ -115,30 +78,32 @@ function QuizList() {
         <button
           className="button Quiz+-button"
           style={{ backgroundColor: "red" }}
-          onClick={addQuiz}
-         
+          onClick={addQuizHandler}
         >
           +Quiz
         </button>
       </li>
       <ul className="list-group">
-        {/* Render quizzes from quizzesList */}
         {quizzesList.map((quiz, index) => (
           <li
             key={index}
             className="list-group-item"
-            onClick={() => setSelectedQuiz(quiz)}
-            style={{ backgroundColor: quiz.published ? "#e6ffe6" : "transparent" }}
+            onClick={() => dispatch(setQuiz(quiz))}
+            style={{
+              backgroundColor: quiz.published ? "#e6ffe6" : "transparent",
+            }}
           >
-           
             <div className="quiz-content">
               <div>
-                <h3><BsRocket className="rocket-icon" />{quiz.name}</h3>
+                <h3>
+                  <BsRocket className="rocket-icon" />
+                  {quiz.name}
+                </h3>
                 <div className="quiz-dates">
                   <p>
-                    <strong>Availability</strong> {quiz.avaliability}{" "}
-                    <strong>Due</strong> {quiz.due}{" "}
-                    <strong>Points</strong> {quiz.points}
+                    <strong>Availability</strong> {quiz.availableFrom}{" "}
+                    <strong>Due</strong> {quiz.due} <strong>Points</strong>{" "}
+                    {quiz.points} {quiz.points}
                   </p>
                 </div>
               </div>
@@ -150,29 +115,54 @@ function QuizList() {
               <div className="button-container">
                 <button
                   className="button context-menu-button"
-                  onClick={(event) => toggleContextMenu(event, quiz._id)}
+                  onClick={() => {  
+                    toggleContextMenu(quiz._id);
+                    dispatch(setQuiz(quiz));
+                  }}
                 >
                   ...
                 </button>
               </div>
             </div>
-            <div id="context-menu" className="context-menu" onClick={hideContextMenu}>
-              <ul className="context-menu-item" onClick={() => editQuiz(selectedQuiz)}>
-                Edit
-              </ul>
-              <ul className="context-menu-item" onClick={() => deleteQuiz(selectedQuiz._id)}>
-                Delete
-              </ul>
-              <ul className="context-menu-item" onClick={() => publishQuiz(selectedQuiz._id)}>
-                {selectedQuiz.published ? "Unpublish" : "Publish"}
-              </ul>
-            </div>
+            {showContextMenu === quiz._id && (
+              <div
+                id="context-menu"
+                className={`context-menu ${
+                  showContextMenu === quiz._id ? "show" : ""
+                }`}
+                onClick={hideContextMenu}
+              >
+                <ul
+                  className="context-menu-item"
+                  onClick={() => editQuiz(quiz)}
+                >
+                  Edit
+                </ul>
+                <ul
+                  className="context-menu-item"
+                  onClick={() => deleteQuizHandler(quiz._id)}
+                >
+                  Delete
+                </ul>
+                <ul
+                  className="context-menu-item"
+                  onClick={() => {
+                    if (quiz.published) {
+                      unpublishQuizHandler(quiz._id);
+                    } else {
+                      publishQuizHandler(quiz._id);
+                    }
+                  }}
+                >
+                  {quiz.published ? "Unpublish" : "Publish"}
+                </ul>
+              </div>
+            )}
           </li>
         ))}
       </ul>
     </ul>
   );
 }
-
 
 export default QuizList;
