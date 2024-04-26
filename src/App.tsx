@@ -28,7 +28,7 @@ function App() {
         <Route path="/quiz-list" element={<QList />} />
         <Route path="/quiz-preview/:quizId" element={<QuizPreview/>} />
         <Route path="/edit-quiz/:quizId" element={<QuizDetailEditor />} />
-        <Route path="/" element={<Navigate to="/Kanbas" replace />} />
+        <Route path="/" element={<Navigate to="/quiz-list" replace />} />
       </Routes>
     </Router>
     </Provider>
